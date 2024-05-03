@@ -21,11 +21,6 @@ jobs:
       GENERIC_IMAGE_TAG: staging
 
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.4.1
-        with:
-          access_token: ${{ github.token }}
-
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -44,11 +39,20 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'adopt'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
 
       - name: Build JAR
         run: ./gradlew shadowJar
+
+      - name: Upload JAR as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: schematio-auth-server
+          path: build/libs/*.jar
 
       - name: Login to Container Registry
         run: docker login rg.fr-par.scw.cloud/schematio -u nologin -p "$AWS_SECRET_ACCESS_KEY"
