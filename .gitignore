@@ -43,3 +43,4 @@ bin/
 
 .history
 .idea
+config.properties
