@@ -48,6 +48,12 @@ jobs:
       - name: Build JAR
         run: ./gradlew shadowJar
 
+      - name: Upload JAR as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: schematio-auth-server
+          path: build/libs/*.jar
+
       - name: Login to Container Registry
         run: docker login rg.fr-par.scw.cloud/schematio -u nologin -p "$AWS_SECRET_ACCESS_KEY"
 
