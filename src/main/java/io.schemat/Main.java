@@ -1,6 +1,7 @@
 // Main.java
 package io.schemat;
 
+import io.schemat.commands.PasswordSessionCommand;
 import io.schemat.utils.ConfigManager;
 import io.schemat.commands.PasswordCommand;
 
@@ -84,6 +85,7 @@ public class Main {
 
                 CommandManager commandManager = MinecraftServer.getCommandManager();
                 commandManager.register(new PasswordCommand(configManager));
+                commandManager.register(new PasswordSessionCommand(configManager));
                 minecraftServer.start("0.0.0.0", 25565);
         }
 }
